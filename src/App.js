@@ -1,23 +1,43 @@
 import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
 
 function App() {
+  const [nome, setNome] = useState({
+    nome: '',
+    email: '',
+    senha: ''
+  })
+  const [alerta, setAlerta] = useState('')
+
+  function fnNome(e) { setNome(prev => ({ ...prev, nome: e.target.value })) }
+  function fnSenha(e) { setNome(prev => ({ ...prev, senha: e.target.value })) }
+  function fnEmail(e) { setNome(prev => ({ ...prev, email: e.target.value })) }
+
+  function fnCadastro() {
+    if (nome.senha == '') { setAlerta('SENHA VAZIO') }
+    if (nome.email == '') { setAlerta('EMAIL VAZIO') }
+    if (nome.nome == '') { setAlerta('NOME VAZIO') }
+    if (nome.nome !== '' && nome.senha !== '' && nome.email !== '') { alert('PODE ENVIAR FORMULARIO') }
+
+  }
+ 
+  useEffect(() => {
+    console.log('', nome)
+  }, [nome])
+
   return (
+
+
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <p>{alerta}</p>
+      <label>NOME</label>
+      <input onChange={fnNome} />
+      <label>EMAIL</label>
+      <input onChange={fnEmail} />
+      <label>SENHA</label>
+      <input onChange={fnSenha} />
+      <button onClick={fnCadastro}>CADASTRO</button>
     </div>
   );
 }
